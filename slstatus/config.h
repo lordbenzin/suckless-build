@@ -64,13 +64,13 @@ static const char unknown_str[] = "n/a";
 static const struct arg args[] = {
 	/* function format          argument */
 
-	{ run_command, "| 🎧 %s ",           "mpc current" },
+	{ run_command, " 🎧 %s ",           "mpc current" },
 	{ run_command, "| 🔉 %s ", "awk -F \"[][]\" '/Left:/ { print $2 }' <(amixer sget Master)" },
 	{ kernel_release, "| 🐧 %s ", ""},
 	{ temp, "| 🔥 %s%% ", "/sys/class/thermal/thermal_zone2/temp" },
-	{ ram_perc, "| 🧠 %s%% ",          "" },
+	{ ram_perc, "| 💾 %s%% ",          "" },
 	{ disk_perc, "| 🗄️ %s%% ",          "/" },
-	{ battery_perc, "| 🔌 %s%%",          "BAT1" },
+	{ battery_perc, "| 🔋%s%%",          "BAT1" },
 	{ battery_state, "%s ",          "BAT1" },
 	{ run_command, "| %s",           "date +'%a %e. %b %Y %H:%M'" },
 };
