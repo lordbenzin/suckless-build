@@ -35,14 +35,16 @@ static const char col_gray4[]       = "#eeeeee";
 static const char col_cyan[]        = "#005577";
 // active window border color
 static const char col_bgsel[]        = "#b90d00";
+ 
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_cyan,  col_bgsel  },
 };
+ 
 
 /* tagging */
-static const char *tags[] = { "1", "2", "3", "4", "5" };
+static const char *tags[] = { "1", "2", "3", "4", "5", "6" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -68,6 +70,8 @@ static const Layout layouts[] = {
 	{ "[@]",      spiral },
  	{ "[\\]",     dwindle },
 	{ "><>",      NULL },    /* no layout function means floating behavior */
+	{ "|M|",      centeredmaster },
+        { ">M>",      centeredfloatingmaster },
 	{ "[M]",      monocle },
 	{ NULL,       NULL },
 
@@ -87,14 +91,15 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, 
-	"-hp", "dino,pcmanfm,mpv,brave,gimp,discord,screenl", NULL };
+static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-hp", "dino,pcmanfm,mpv,brave,gimp,discord,screenl", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *aerccmd[]  = { "st", "-e", "aerc", NULL };
 static const char *bravecmd[]  = { "brave", NULL };
 static const char *ncmcmd[]  = { "st", "-e", "ncmpcpp", NULL };
 static const char *newscmd[]  = { "st", "-e", "newsboat", NULL };
 static const char *emojicmd[]  = { "unicode", NULL };
+static const char scratchpadname[] = "scratchpad";
+static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 
 #include "movestack.c"
 static Key keys[] = {
@@ -105,6 +110,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_n,      spawn,          {.v = ncmcmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = newscmd } },
 	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
+        { MODKEY,                       XK_uring,  togglescratch,  {.v = scratchpadcmd } },
 	{ ControlMask|ShiftMask,        XK_p, spawn,          {.v = emojicmd } },
 	{ MODKEY2,		        XK_comma, spawn,          {.v = mpcprev_cmd } },
 	{ MODKEY2,		        XK_period, spawn,          {.v = mpcpause_cmd } },
@@ -130,10 +136,12 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Tab,    view,           {0} },
 	{ MODKEY|ShiftMask,             XK_q,      killclient,     {0} },
 	{ MODKEY,                       XK_t,      setlayout,      {.v = &layouts[0]} },
-	{ MODKEY,                       XK_f,      setlayout,      {.v = &layouts[3]} },
 	{ MODKEY,                       XK_r,      setlayout,      {.v = &layouts[1]} },
 	{ MODKEY|ShiftMask,             XK_r,      setlayout,      {.v = &layouts[2]} },
-	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[4]} },
+	{ MODKEY,                       XK_u,      setlayout,      {.v = &layouts[3]} },
+	{ MODKEY,                       XK_z,      setlayout,      {.v = &layouts[4]} },
+        { MODKEY|ShiftMask,             XK_z,      setlayout,      {.v = &layouts[5]} },
+	{ MODKEY,                       XK_o,      setlayout,      {.v = &layouts[6]} },
 	{ MODKEY,                       XK_space,  setlayout,      {0} },
 	{ MODKEY|ShiftMask,             XK_space,  togglefloating, {0} },
 	{ MODKEY,                       XK_s,      togglesticky,   {0} },
@@ -156,7 +164,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_scaron,                      2)
 	TAGKEYS(                        XK_ccaron,                      3)
 	TAGKEYS(                        XK_rcaron,                      4)
-	TAGKEYS(                        XK_6,                      5)
+	TAGKEYS(                        XK_zcaron,                      5)
 	TAGKEYS(                        XK_7,                      6)
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
