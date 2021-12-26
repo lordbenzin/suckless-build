@@ -39,8 +39,7 @@ static const char unknown_str[] = "n/a";
  * num_files           number of files in a directory  path
  *                                                     (/home/foo/Inbox/cur)
  * ram_free            free memory in GB               NULL
- * ram_perc            memory usage in percent         NULL
- * ram_total           total memory size in GB         NULL
+ * ram_perc            memory usage in percent         NULL ram_total           total memory size in GB         NULL
  * ram_used            used memory in GB               NULL
  * run_command         custom shell command            command (echo foo)
  * separator           string to echo                  NULL
@@ -65,12 +64,13 @@ static const struct arg args[] = {
 	/* function format          argument */
 
 	{ run_command, " 🎧 %s",           "mpc current" },
-	{ run_command, " 🔉%s", "awk -F \"[][]\" '/Left:/ { print $2 }' <(amixer sget Master)" },
-	{ kernel_release, " 🐧 %s", ""},
-	{ temp, " 🌡️%s°C", "/sys/class/thermal/thermal_zone2/temp" },
-	{ ram_perc, " 💾%s%%",          "" },
-	{ disk_perc, " 🗄️%s%%",          "/" },
+	{ run_command, " 🔉%s%%", "pamixer --get-volume" },
+	{ run_command, " 🌤️%s", "curl wttr.in/?0?q?T 2>/dev/null | awk '/°(C|F)/ {printf $(NF-1) $NF}'" },
+	{ run_command, " 📦%s", "pacman -Q | wc -l" },
+	{ temp, " 🔥%s°C", "/sys/class/thermal/thermal_zone2/temp" },
+	{ ram_perc, " 💿%s%%",          "" },
+	{ run_command, " 🗄️%s",        "df -h /dev/sda2 | grep -o [0-9][0-9]%" },
 	{ run_command , " %s",          "batstat.sh" },
-	{ battery_perc, "%s%% ",          "BAT1" },
-	{ run_command, "| 📅 %s",           "date +'%a%e.%b %Y %H:%M'" },
+	{ battery_perc, "%s%% |",          "BAT1" },
+	{ run_command, " 📅 %s",           "date +'[%a-%e-%m-%Y] %H:%M'" },
 };

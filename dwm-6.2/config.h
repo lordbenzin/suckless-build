@@ -3,31 +3,17 @@
 /* appearance */
 #include <X11/XF86keysym.h>
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int snap      = 22;       /* snap pixel */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappov    = 15;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=12:antialias=true:autohint=true" };
 static const char dmenufont[]       = "monospace:size=10";
-static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
-static const char *volupcmd[] = { "pactl", "set-sink-volume", "0", "+5%", NULL };
-static const char *voldowncmd[] = { "pactl", "set-sink-volume", "0", "-5%", NULL };
-static const char *brupcmd[] = { "light", "-A", "5", NULL };
-static const char *brdowncmd[] = {"light", "-U", "5", NULL };
-static const char *mpcup_cmd[] = {"mpc", "volume", "+5", NULL };
-static const char *mpcpause_cmd[] = {"mpc", "toggle", NULL };
-static const char *mpcdown_cmd[] = {"mpc", "volume", "-5", NULL };
-static const char *mpcnext_cmd[] = {"mpc", "next", NULL };
-static const char *mpcprev_cmd[] = {"mpc", "prev", NULL };
-static const char *rs1_cmd[] = {"redshift", "-P", "-O", "3500", NULL };
-static const char *rs2_cmd[] = {"redshift", "-P", "-O", "2300", NULL };
-static const char *rsx_cmd[] = {"redshift", "-x", NULL };
-static const char *todo_cmd[] = {"todo", NULL };
 
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -94,7 +80,20 @@ static const char *newscmd[]  = { "st", "-e", "newsboat", NULL };
 static const char *emojicmd[]  = { "unicode", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
-
+static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
+static const char *volupcmd[] = { "pactl", "set-sink-volume", "0", "+5%", NULL };
+static const char *voldowncmd[] = { "pactl", "set-sink-volume", "0", "-5%", NULL };
+static const char *brupcmd[] = { "light", "-A", "5", NULL };
+static const char *brdowncmd[] = {"light", "-U", "5", NULL };
+static const char *mpcup_cmd[] = {"mpc", "volume", "+5", NULL };
+static const char *mpcpause_cmd[] = {"mpc", "toggle", NULL };
+static const char *mpcdown_cmd[] = {"mpc", "volume", "-5", NULL };
+static const char *mpcnext_cmd[] = {"mpc", "next", NULL };
+static const char *mpcprev_cmd[] = {"mpc", "prev", NULL };
+static const char *rs1_cmd[] = {"redshift", "-P", "-O", "3500", NULL };
+static const char *rs2_cmd[] = {"redshift", "-P", "-O", "2300", NULL };
+static const char *rsx_cmd[] = {"redshift", "-x", NULL };
+static const char *todo_cmd[] = {"todo", NULL };
 
 #include <X11/XF86keysym.h>
 #include "movestack.c"
@@ -110,7 +109,6 @@ static Key keys[] = {
 	{ ControlMask|ShiftMask,        XK_p, spawn,          {.v = emojicmd } },
 	{ MODKEY2,		        XK_comma, spawn,          {.v = mpcprev_cmd } },
 	{ MODKEY2,		        XK_period, spawn,          {.v = mpcpause_cmd } },
-	{ MODKEY2,		        XK_minus, spawn,          {.v = mpcnext_cmd } },
 	{ MODKEY2,		        XK_minus, spawn,          {.v = mpcnext_cmd } },
 	{ MODKEY2,		        XK_uring, spawn,          {.v = mpcdown_cmd } },
 	{ MODKEY2,		        XK_section, spawn,          {.v = mpcup_cmd } },

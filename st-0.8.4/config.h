@@ -23,8 +23,7 @@ char *utmp = NULL;
 char *scroll = NULL;
 char *stty_args = "stty raw pass8 nl -echo -iexten -cstopb 38400";
 
-/* identification sequence returned in DA and DECID */
-char *vtiden = "\033[?6c";
+/* identification sequence returned in DA and DECID */ char *vtiden = "\033[?6c";
 
 /* Kerning / character bounding-box multipliers */
 static float cwscale = 1.0;
@@ -113,7 +112,7 @@ char *termname = "st-256color";
 unsigned int tabspaces = 8;
 
 /* bg opacity */
-float alpha = 0.90;
+float alpha = 0.9;
 
 /* Terminal colors (16 first used in escape sequence) */
 
@@ -230,10 +229,12 @@ ResourcePref resources[] = {
  * Internal mouse shortcuts.
  * Beware that overloading Button1 will disable the selection.
  */
+#define MODKEY Mod1Mask
+#define TERMMOD (ControlMask|ShiftMask)
 static MouseShortcut mshortcuts[] = {
 	/* mask                 button   function        argument       release */
-	{ ShiftMask,            Button4, kscrollup,      {.i = 1} },
-	{ ShiftMask,            Button5, kscrolldown,    {.i = 1} },
+	{ MODKEY,            Button4, kscrollup,      {.i = 4} },
+	{ MODKEY,            Button5, kscrolldown,    {.i = 4} },
 	{ XK_ANY_MOD,           Button2, selpaste,       {.i = 0},      1 },
 	{ ShiftMask,            Button4, ttysend,        {.s = "\033[5;2~"} },
 	{ XK_ANY_MOD,           Button4, ttysend,        {.s = "\031"} },
@@ -242,8 +243,6 @@ static MouseShortcut mshortcuts[] = {
 };
 
 /* Internal keyboard shortcuts. */
-#define MODKEY Mod1Mask
-#define TERMMOD (ControlMask|ShiftMask)
 
 static Shortcut shortcuts[] = {
 	/* mask                 keysym          function        argument */
@@ -251,8 +250,8 @@ static Shortcut shortcuts[] = {
 	{ ControlMask,          XK_Print,       toggleprinter,  {.i =  0} },
 	{ ShiftMask,            XK_Print,       printscreen,    {.i =  0} },
 	{ XK_ANY_MOD,           XK_Print,       printsel,       {.i =  0} },
-	{ MODKEY,              XK_h,       zoom,           {.f = +1} },
-	{ MODKEY,              XK_l,        zoom,           {.f = -1} },
+	{ MODKEY,              XK_l,       zoom,           {.f = +1} },
+	{ MODKEY,              XK_h,        zoom,           {.f = -1} },
 	{ TERMMOD,              XK_Home,        zoomreset,      {.f =  0} },
 	{ TERMMOD,              XK_C,           clipcopy,       {.i =  0} },
 	{ TERMMOD,              XK_V,           clippaste,      {.i =  0} },
@@ -263,7 +262,7 @@ static Shortcut shortcuts[] = {
 	{ MODKEY,            XK_Page_Up,     kscrollup,      {.i = -1} },
 	{ MODKEY,            XK_Page_Down,   kscrolldown,    {.i = -1} },
 	{ MODKEY,            XK_j,   kscrolldown,    {.i = 1} },
-        { MODKEY,               XK_l,           copyurl,        {.i =  0} },
+        { MODKEY,               XK_c,           copyurl,        {.i =  0} },
         { TERMMOD,              XK_Return,      newterm,        {.i =  0} },
 };
 
