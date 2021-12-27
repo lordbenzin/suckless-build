@@ -1,6 +1,7 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
+/* appearance */
 #include <X11/XF86keysym.h>
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 22;       /* snap pixel */
@@ -12,9 +13,8 @@ static const int smartgaps          = 0;        /* 1 means no outer gap when the
 static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10", "JoyPixels:pixelsize=12:antialias=true:autohint=true" };
+static const char *fonts[]          =  { "monospace:size=10", "JoyPixels:pixelsize=12:antialias=true:autohint=true" }; 
 static const char dmenufont[]       = "monospace:size=10";
-
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
 static const char col_gray3[]       = "#bbbbbb";
@@ -80,6 +80,7 @@ static const char *newscmd[]  = { "st", "-e", "newsboat", NULL };
 static const char *emojicmd[]  = { "unicode", NULL };
 static const char scratchpadname[] = "scratchpad";
 static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
+static const char *lfcmd[] = { "st", "-e", "lf", NULL };
 static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
 static const char *volupcmd[] = { "pactl", "set-sink-volume", "0", "+5%", NULL };
 static const char *voldowncmd[] = { "pactl", "set-sink-volume", "0", "-5%", NULL };
@@ -100,6 +101,7 @@ static const char *todo_cmd[] = {"todo", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_f,      spawn,          {.v = lfcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = aerccmd } },
 	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
 	{ MODKEY,                       XK_m,      spawn,          {.v = ncmcmd } },
