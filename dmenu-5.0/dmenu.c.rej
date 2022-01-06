@@ -1,11 +1,19 @@
 --- dmenu.c
 +++ dmenu.c
-@@ -26,7 +26,7 @@
- #define TEXTW(X)              (drw_fontset_getwidth(drw, (X)) + lrpad)
+@@ -132,6 +132,7 @@ drawmenu(void)
+ 	unsigned int curpos;
+ 	struct item *item;
+ 	int x = 0, y = 0, w;
++	char *censort;
  
- /* enums */
--enum { SchemeNorm, SchemeSel, SchemeOut, SchemeLast }; /* color schemes */
-+enum { SchemeNorm, SchemeSel, SchemeOut, SchemeNormHighlight, SchemeSelHighlight, SchemeLast }; /* color schemes */
- 
- struct item {
- 	char *text;
+ 	drw_setscheme(drw, scheme[SchemeNorm]);
+ 	drw_rect(drw, 0, 0, mw, mh, 1, 1);
+@@ -699,7 +710,7 @@ setup(void)
+ static void
+ usage(void)
+ {
+-	fputs("usage: dmenu [-bfiv] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
++	fputs("usage: dmenu [-bfivP] [-l lines] [-p prompt] [-fn font] [-m monitor]\n"
+ 	      "             [-nb color] [-nf color] [-sb color] [-sf color] [-w windowid]\n", stderr);
+ 	exit(1);
+ }

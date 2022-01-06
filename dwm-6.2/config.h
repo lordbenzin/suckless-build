@@ -39,6 +39,7 @@ static const Rule rules[] = {
        { "Gimp",    NULL,     NULL,           0,         1,		1,          0,           0,        -1 },
        { "Firefox", NULL,     NULL,           1 << 8,    0,		0,          0,          -1,        -1 },
        { "St",      NULL,     NULL,           0,         1,		0,          1,           0,        -1 },
+       { "xaskpass",      NULL,     NULL,           0,         1,		1,          0,           0,        -1 },
        { NULL,      NULL,     "Event Tester", 0,         0,		0,          0,           1,        -1 }, /* xev
 */
 
@@ -96,6 +97,8 @@ static const char *rs1_cmd[] = {"redshift", "-P", "-O", "3500", NULL };
 static const char *rs2_cmd[] = {"redshift", "-P", "-O", "2300", NULL };
 static const char *rsx_cmd[] = {"redshift", "-x", NULL };
 static const char *todo_cmd[] = {"todo", NULL };
+static const char *dmmount_cmd[] = {"dmmount", NULL };
+static const char *dmmountu_cmd[] = {"dmmount", "-u", NULL };
 
 #include <X11/XF86keysym.h>
 #include "movestack.c"
@@ -111,6 +114,8 @@ static Key keys[] = {
 	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
         { MODKEY,                       XK_uacute,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,  		        XK_p, spawn,          {.v = emojicmd } },
+	{ MODKEY,		        XK_F11, spawn,          {.v = dmmount_cmd } },
+	{ MODKEY,		        XK_F12, spawn,          {.v = dmmountu_cmd } },
 	{ MODKEY2,		        XK_comma, spawn,          {.v = mpcprev_cmd } },
 	{ MODKEY2,		        XK_period, spawn,          {.v = mpcpause_cmd } },
 	{ MODKEY2,		        XK_minus, spawn,          {.v = mpcnext_cmd } },
