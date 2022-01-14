@@ -71,5 +71,5 @@ static const struct arg args[] = {
 	{ run_command, " 🗄️%s",        "df -h /dev/sda2 | grep -o [0-9][0-9]%" },
 	{ run_command , " %s",          "batstat.sh" },
 	{ battery_perc, "%s%% |",          "BAT1" },
-	{ run_command, " 📅 %s",           "date +'[%a%e.%m.%Y] %H:%M'" },
+	{ run_command, " 📅 %s",           "date +'[%a %e.%m.%Y] %H:%M'" },
 };

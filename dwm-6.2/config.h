@@ -38,7 +38,7 @@ static const Rule rules[] = {
 	/* class     instance  title           tags mask  iscentered isfloating  isterminal  noswallow  monitor */
        { "Gimp",    NULL,     NULL,           0,         1,		1,          0,           0,        -1 },
        { "Firefox", NULL,     NULL,           1 << 8,    0,		0,          0,          -1,        -1 },
-       { "St",      NULL,     NULL,           0,         1,		0,          1,           0,        -1 },
+       { "st",      NULL,     NULL,           0,         1,		0,          1,           0,        -1 },
        { "xaskpass",      NULL,     NULL,           0,         1,		1,          0,           0,        -1 },
        { NULL,      NULL,     "Event Tester", 0,         0,		0,          0,           1,        -1 }, /* xev
 */
@@ -48,7 +48,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -76,6 +76,7 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *aerccmd[]  = { "st", "-e", "aerc", NULL };
 static const char *bravecmd[]  = { "brave", NULL };
+static const char *surfcmd[]  = { "tabbed", "-r", "2", "surf", "-e", "ID", "searx.ekabin.xyz/searx", NULL };
 static const char *ncmcmd[]  = { "st", "-e", "ncmpcpp", NULL };
 static const char *newscmd[]  = { "st", "-e", "newsboat", NULL };
 static const char *emojicmd[]  = { "unicode", NULL };
@@ -97,6 +98,7 @@ static const char *rs1_cmd[] = {"redshift", "-P", "-O", "3500", NULL };
 static const char *rs2_cmd[] = {"redshift", "-P", "-O", "2300", NULL };
 static const char *rsx_cmd[] = {"redshift", "-x", NULL };
 static const char *todo_cmd[] = {"todo", NULL };
+static const char *todop_cmd[] = {"todo", "print", NULL };
 static const char *dmmount_cmd[] = {"dmmount", NULL };
 static const char *dmmountu_cmd[] = {"dmmount", "-u", NULL };
 
@@ -108,7 +110,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_f,      spawn,          {.v = lfcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = aerccmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = bookcmd } },
-	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = surfcmd } },
 	{ MODKEY,                       XK_m,      spawn,          {.v = ncmcmd } },
 	{ MODKEY,                       XK_n,      spawn,          {.v = newscmd } },
 	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
@@ -121,10 +123,11 @@ static Key keys[] = {
 	{ MODKEY2,		        XK_minus, spawn,          {.v = mpcnext_cmd } },
 	{ MODKEY2,		        XK_uring, spawn,          {.v = mpcdown_cmd } },
 	{ MODKEY2,		        XK_section, spawn,          {.v = mpcup_cmd } },
-	{ MODKEY2,		        XK_n, spawn,          {.v = rs1_cmd } },
-	{ MODKEY2,		        XK_m, spawn,          {.v = rs2_cmd } },
-	{ MODKEY2,		        XK_b, spawn,          {.v = rsx_cmd } },
+	{ MODKEY2,		        XK_F1, spawn,          {.v = rs1_cmd } },
+	{ MODKEY2,		        XK_F2, spawn,          {.v = rs2_cmd } },
+	{ MODKEY2,		        XK_F3, spawn,          {.v = rsx_cmd } },
 	{ MODKEY,		        XK_i, spawn,          {.v = todo_cmd } },
+	{ MODKEY,		        XK_o, spawn,          {.v = todop_cmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
