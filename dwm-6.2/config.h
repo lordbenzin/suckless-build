@@ -1,7 +1,6 @@
 /* See LICENSE file for copyright and license details. */
 
 /* appearance */
-/* appearance */
 #include <X11/XF86keysym.h>
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 22;       /* snap pixel */
@@ -72,8 +71,9 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-hp", "dino,pcmanfm,mpv,brave,gimp,discord,screenl", NULL };
+static const char *dmenucmd[] = { "dmenu_run",  "-hp", "dino,pcmanfm,mpv,brave,gimp,discord,screenl", NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *htopcmd[]  = { "st", "-e", "htop", NULL };
 static const char *aerccmd[]  = { "st", "-e", "aerc", NULL };
 static const char *bravecmd[]  = { "brave", NULL };
 static const char *surfcmd[]  = { "tabbed", "-r", "2", "surf", "-e", "ID", "searx.ekabin.xyz/searx", NULL };
@@ -107,6 +107,7 @@ static const char *dmmountu_cmd[] = {"dmmount", "-u", NULL };
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
+	{ MODKEY,                       XK_c,      spawn,          {.v = htopcmd } },
 	{ MODKEY,                       XK_f,      spawn,          {.v = lfcmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = aerccmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = bookcmd } },
@@ -123,9 +124,9 @@ static Key keys[] = {
 	{ MODKEY2,		        XK_minus, spawn,          {.v = mpcnext_cmd } },
 	{ MODKEY2,		        XK_uring, spawn,          {.v = mpcdown_cmd } },
 	{ MODKEY2,		        XK_section, spawn,          {.v = mpcup_cmd } },
-	{ MODKEY2,		        XK_F1, spawn,          {.v = rs1_cmd } },
-	{ MODKEY2,		        XK_F2, spawn,          {.v = rs2_cmd } },
-	{ MODKEY2,		        XK_F3, spawn,          {.v = rsx_cmd } },
+	{ MODKEY,		        XK_F1, spawn,          {.v = rs1_cmd } },
+	{ MODKEY,		        XK_F2, spawn,          {.v = rs2_cmd } },
+	{ MODKEY,		        XK_F3, spawn,          {.v = rsx_cmd } },
 	{ MODKEY,		        XK_i, spawn,          {.v = todo_cmd } },
 	{ MODKEY,		        XK_o, spawn,          {.v = todop_cmd } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },

@@ -66,6 +66,7 @@ static const struct arg args[] = {
 	{ run_command, " 🎧 %s",           "mpc current" },
 	{ run_command, " 🔉%s%%", "pamixer --get-volume" },
 	{ run_command, " 📦%s", "pacman -Q | wc -l" },
+	{ run_command, " [%s]", "wtr" },
 	{ temp, " 🔥%s°C", "/sys/class/thermal/thermal_zone2/temp" },
 	{ ram_perc, " 💿%s%%",          "" },
 	{ run_command, " 🗄️%s",        "df -h /dev/sda2 | grep -o [0-9][0-9]%" },
