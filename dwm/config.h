@@ -4,12 +4,12 @@
 #include <X11/XF86keysym.h>
 static const unsigned int borderpx  = 3;        /* border pixel of windows */
 static const unsigned int snap      = 22;       /* snap pixel */
+static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const unsigned int gappih    = 10;       /* horiz inner gap between windows */
 static const unsigned int gappiv    = 10;       /* vert inner gap between windows */
 static const unsigned int gappoh    = 10;       /* horiz outer gap between windows and screen edge */
-static const unsigned int gappov    = 15;       /* vert outer gap between windows and screen edge */
+static const unsigned int gappov    = 10;       /* vert outer gap between windows and screen edge */
 static const int smartgaps          = 0;        /* 1 means no outer gap when there is only one window */
-static const int swallowfloating    = 0;        /* 1 means swallow floating windows by default */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          =  { "monospace:size=10", "JoyPixels:pixelsize=12:antialias=true:autohint=true" }; 
@@ -30,17 +30,16 @@ static const char *colors[][3]      = {
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 static const Rule rules[] = {
-	/* xprop(1):
-	 *	WM_CLASS(STRING) = instance, class
-	 *	WM_NAME(STRING) = title
-	 */
-	/* class     instance  title           tags mask  iscentered isfloating  isterminal  noswallow  monitor */
-       { "Gimp",    NULL,     NULL,           0,         1,		1,          0,           0,        -1 },
-       { "Firefox", NULL,     NULL,           1 << 8,    0,		0,          0,          -1,        -1 },
-       { "st",      NULL,     NULL,           0,         1,		0,          1,           0,        -1 },
-       { "xaskpass",      NULL,     NULL,           0,         1,		1,          0,           0,        -1 },
-       { NULL,      NULL,     "Event Tester", 0,         0,		0,          0,           1,        -1 }, /* xev
-*/
+        /* xprop(1):
+         *      WM_CLASS(STRING) = instance, class
+         *      WM_NAME(STRING) = title
+         */
+        /* class     instance  title           tags mask  iscentered isfloating  isterminal  noswallow  monitor  scratchkey*/
+       { "Gimp",    NULL,     NULL,           0,         1,             1,          0,           0,        -1, 0 },
+       { "Firefox", NULL,     NULL,           1 << 8,    0,             0,          0,          -1,        -1, 0 },
+       { "st",      NULL,     NULL,           0,         1,             0,          1,           0,        -1, 0 },
+       { NULL,      NULL,     "Event Tester", 0,         0,             0,          0,           1,        -1, 0 }, /* xev */
+       { NULL,      NULL,     "scratchpad", 0,         1,             1,          0,           1,        -1, 's' }, 
 
 };
 
@@ -48,6 +47,7 @@ static const Rule rules[] = {
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
 static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int lockfullscreen = 1; /* 1 will force focus on the fullscreen window */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -81,8 +81,6 @@ static const char *ncmcmd[]  = { "st", "-e", "ncmpcpp", NULL };
 static const char *newscmd[]  = { "st", "-e", "newsboat", NULL };
 static const char *emojicmd[]  = { "unicode", NULL };
 static const char *bookcmd[]  = { "booksel", NULL };
-static const char scratchpadname[] = "scratchpad";
-static const char *scratchpadcmd[] = { "st", "-t", scratchpadname, "-g", "120x34", NULL };
 static const char *lfcmd[] = { "st", "-e", "lf", NULL };
 static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
 static const char *volupcmd[] = { "pactl", "set-sink-volume", "0", "+5%", NULL };
@@ -102,7 +100,10 @@ static const char *todop_cmd[] = {"todo", "print", NULL };
 static const char *dmmount_cmd[] = {"dmmount", NULL };
 static const char *dmmountu_cmd[] = {"dmmount", "-u", NULL };
 
-#include <X11/XF86keysym.h>
+
+/*First arg only serves to match against key in rules*/
+static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "120x34", NULL};
+
 #include "movestack.c"
 static Key keys[] = {
 	/* modifier                     key        function        argument */
@@ -115,10 +116,10 @@ static Key keys[] = {
 	{ MODKEY,                       XK_m,      spawn,          {.v = ncmcmd } },
 	{ MODKEY,                       XK_n,      spawn,          {.v = newscmd } },
 	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
-        { MODKEY,                       XK_uacute,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,  		        XK_p, spawn,          {.v = emojicmd } },
 	{ MODKEY,		        XK_F11, spawn,          {.v = dmmount_cmd } },
 	{ MODKEY,		        XK_F12, spawn,          {.v = dmmountu_cmd } },
+        { MODKEY,                       XK_uacute,  togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY2,		        XK_comma, spawn,          {.v = mpcprev_cmd } },
 	{ MODKEY2,		        XK_period, spawn,          {.v = mpcpause_cmd } },
 	{ MODKEY2,		        XK_minus, spawn,          {.v = mpcnext_cmd } },
