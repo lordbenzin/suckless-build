@@ -69,6 +69,7 @@ static const Layout layouts[] = {
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
+
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run",  "-hp", "dino,pcmanfm,mpv,brave,gimp,discord,screenl", NULL };
@@ -82,9 +83,10 @@ static const char *newscmd[]  = { "st", "-e", "newsboat", NULL };
 static const char *emojicmd[]  = { "unicode", NULL };
 static const char *bookcmd[]  = { "booksel", NULL };
 static const char *lfcmd[] = { "st", "-e", "lf", NULL };
-static const char *mutecmd[] = { "pactl", "set-sink-mute", "0", "toggle", NULL };
-static const char *volupcmd[] = { "pactl", "set-sink-volume", "0", "+5%", NULL };
-static const char *voldowncmd[] = { "pactl", "set-sink-volume", "0", "-5%", NULL };
+static const char *lf2cmd[] = { "st", "-e", "lf", "/media", NULL };
+static const char *mutecmd[] = { "pactl", "set-sink-mute", "@DEFAULT_SINK@", "toggle", NULL };
+static const char *volupcmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "+5%", NULL };
+static const char *voldowncmd[] = { "pactl", "set-sink-volume", "@DEFAULT_SINK@", "-5%", NULL };
 static const char *brupcmd[] = { "light", "-A", "5", NULL };
 static const char *brdowncmd[] = {"light", "-U", "5", NULL };
 static const char *mpcup_cmd[] = {"mpc", "volume", "+5", NULL };
@@ -100,6 +102,9 @@ static const char *todop_cmd[] = {"todo", "print", NULL };
 static const char *dmmount_cmd[] = {"dmmount", NULL };
 static const char *dmmountu_cmd[] = {"dmmount", "-u", NULL };
 
+static const char *blockup_cmd1[] = {"pkill", "-RTMIN+1", "dwmblocks", NULL };
+static const char *blockup_cmd2[] = {"pkill", "-RTMIN+2", "dwmblocks", NULL };
+
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "120x34", NULL};
@@ -110,21 +115,30 @@ static Key keys[] = {
 	{ MODKEY,                       XK_d,      spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_c,      spawn,          {.v = htopcmd } },
 	{ MODKEY,                       XK_f,      spawn,          {.v = lfcmd } },
+	{ MODKEY|ShiftMask,             XK_f,      spawn,          {.v = lf2cmd } },
 	{ MODKEY,                       XK_a,      spawn,          {.v = aerccmd } },
 	{ MODKEY,                       XK_v,      spawn,          {.v = bookcmd } },
-	{ MODKEY,                       XK_w,      spawn,          {.v = surfcmd } },
+	{ MODKEY,                       XK_w,      spawn,          {.v = bravecmd } },
 	{ MODKEY,                       XK_m,      spawn,          {.v = ncmcmd } },
 	{ MODKEY,                       XK_n,      spawn,          {.v = newscmd } },
 	{ MODKEY,		        XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY,  		        XK_p, spawn,          {.v = emojicmd } },
 	{ MODKEY,		        XK_F11, spawn,          {.v = dmmount_cmd } },
 	{ MODKEY,		        XK_F12, spawn,          {.v = dmmountu_cmd } },
+
         { MODKEY,                       XK_uacute,  togglescratch,  {.v = scratchpadcmd } },
+
 	{ MODKEY2,		        XK_comma, spawn,          {.v = mpcprev_cmd } },
 	{ MODKEY2,		        XK_period, spawn,          {.v = mpcpause_cmd } },
 	{ MODKEY2,		        XK_minus, spawn,          {.v = mpcnext_cmd } },
 	{ MODKEY2,		        XK_uring, spawn,          {.v = mpcdown_cmd } },
 	{ MODKEY2,		        XK_section, spawn,          {.v = mpcup_cmd } },
+	{ MODKEY2,		        XK_comma, spawn,          {.v = blockup_cmd2 } },
+	{ MODKEY2,		        XK_period, spawn,          {.v = blockup_cmd2 } },
+	{ MODKEY2,		        XK_minus, spawn,          {.v = blockup_cmd2 } },
+	{ MODKEY2,		        XK_uring, spawn,          {.v = blockup_cmd2 } },
+	{ MODKEY2,		        XK_section, spawn,          {.v = blockup_cmd2 } },
+
 	{ MODKEY,		        XK_F1, spawn,          {.v = rs1_cmd } },
 	{ MODKEY,		        XK_F2, spawn,          {.v = rs2_cmd } },
 	{ MODKEY,		        XK_F3, spawn,          {.v = rsx_cmd } },
@@ -167,6 +181,13 @@ static Key keys[] = {
 	{ 0, XF86XK_AudioRaiseVolume, spawn, {.v = volupcmd } },
 	{ 0, XF86XK_MonBrightnessUp, spawn, {.v = brupcmd} },
 	{ 0, XF86XK_MonBrightnessDown, spawn, {.v = brdowncmd} },
+
+	{ 0, XF86XK_AudioMute, spawn, {.v = blockup_cmd1 } },
+	{ 0, XF86XK_AudioLowerVolume, spawn, {.v = blockup_cmd1 } },
+	{ 0, XF86XK_AudioRaiseVolume, spawn, {.v = blockup_cmd1 } },
+	{ 0, XF86XK_MonBrightnessUp, spawn, {.v = blockup_cmd1} },
+	{ 0, XF86XK_MonBrightnessDown, spawn, {.v = blockup_cmd1} },
+
 	TAGKEYS(                        XK_plus,                      0)
 	TAGKEYS(                        XK_ecaron,                      1)
 	TAGKEYS(                        XK_scaron,                      2)
