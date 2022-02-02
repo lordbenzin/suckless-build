@@ -72,7 +72,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run",  "-hp", "dino,pcmanfm,mpv,brave,gimp,discord,screenl", NULL };
+static const char *dmenucmd[] = { "dmenu_run",  "-hp", "dino,mpv,brave,gimp,discord,screenl", NULL };
 static const char *termcmd[]  = { "st", NULL };
 static const char *htopcmd[]  = { "st", "-e", "htop", NULL };
 static const char *aerccmd[]  = { "st", "-e", "aerc", NULL };
@@ -170,11 +170,11 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 
 
-	{ MODKEY,                       XK_uring,  incrogaps,       {.i = -4 } },
-	{ MODKEY,                       XK_section,  incrogaps,       {.i = +4 } },
+	{ MODKEY,                       XK_section,  incrogaps,       {.i = -4 } },
+	{ MODKEY,                       XK_uring,  incrogaps,       {.i = +4 } },
        	{ MODKEY,              XK_dead_diaeresis,      togglegaps,     {0} },
-	{ MODKEY,                       XK_minus,  incrigaps,       {.i = +4 } },
-	{ MODKEY,                       XK_period,  incrigaps,       {.i = -4 } },
+	{ MODKEY,                       XK_period,  incrigaps,       {.i = +4 } },
+	{ MODKEY,                       XK_minus,  incrigaps,       {.i = -4 } },
 
 	{ 0, XF86XK_AudioMute, spawn, {.v = mutecmd } },
 	{ 0, XF86XK_AudioLowerVolume, spawn, {.v = voldowncmd } },
